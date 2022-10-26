@@ -1,7 +1,7 @@
 #include<iostream>
 #include<algorithm>
 using namespace std;
- 
+// compare a and b, ouput how many numbers in a smaller than each element of b
 void input(int *num, long long size)
 {
     for(long long i = 0; i < size; i++)
