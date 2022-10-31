@@ -12,8 +12,8 @@ struct LNode
 };
 
 template<class ElemType>
-unsigned createList(LNode<ElemType>* &newList, const ElemType* data, const int size){
-    LNode* p = nullptr, *q = nullptr;
+LNode<ElemType>* createList(LNode<ElemType>* &newList, const ElemType* data, const int size){
+    LNode *p = nullptr, *q = nullptr;
     try{
         if(size < 0)
             throw size;
@@ -21,7 +21,8 @@ unsigned createList(LNode<ElemType>* &newList, const ElemType* data, const int s
             
         }
     }
-    catch(size){
-        cout << "Index must be above 0.\n";
+    catch(int size){
+        cout << "Invalid size.\n";
+        return nullptr;
     }
 }
