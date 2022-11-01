@@ -15,6 +15,7 @@ public:
     Rational(int, int);
     Rational add(const Rational&) const;
     Rational operator+(const Rational&) const;
+    friend ostream& operator<<(ostream&, const Rational&);
     // Rational substract(const Rational& anotherRational) const;
     // Rational multiply(const Rational& anotherRational) const;
     // Rational divide(const Rational& anotherRational) const;
@@ -39,7 +40,7 @@ int Rational::Common(int n, int d){
     else
         return n;
 }
-Rational::Rational(int newNumerator, int newDenominator){
+Rational::Rational(int newNumerator, int newDenominator = 1){
     numerator = newNumerator / Common(myabs(newNumerator), myabs(newDenominator));
     denominator = newDenominator / Common(myabs(newNumerator), myabs(newDenominator));
 }
@@ -59,13 +60,17 @@ string Rational::toString() const{
 double Rational::doubleValue() const{
     return static_cast <double> (numerator) / denominator;
 }
+ostream& operator<<(ostream& out, const Rational& thisRational){
+    thisRational.denominator > 1 ? out << thisRational.numerator << " / " << thisRational.denominator : out << thisRational.numerator;
+    return out;
+}
+typedef Rational Integer;
+
 #include<iostream>
-#include<string>
 int main()
 {
-    Rational r1(11, 20), r2(12, 20);
-    std::cout << (r1 + r2).toString() << endl;
-    cout << (r1 + r2).doubleValue() << endl;
+    Integer r1(1), r2(1);
+    cout << r1 << " - " << r2 << " = " << r1 + r2 << endl;
     system("pause");
     return 0;
 }
