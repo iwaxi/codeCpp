@@ -40,7 +40,7 @@ int Rational::Common(int n, int d){
     else
         return n;
 }
-Rational::Rational(int newNumerator, int newDenominator = 1){
+Rational::Rational(int newNumerator = 0, int newDenominator = 1){
     numerator = newNumerator / Common(myabs(newNumerator), myabs(newDenominator));
     denominator = newDenominator / Common(myabs(newNumerator), myabs(newDenominator));
 }
