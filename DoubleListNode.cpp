@@ -26,7 +26,7 @@ LNode<ElemType>* create(const ElemType* data, int size){
         tail->value = data[i];
         
         ptr->next = tail;
-        head->Tail = tail; // head !
+        head->Tail = tail; // head instead of ptr.
         ptr = tail;
     }
     return head;
@@ -48,9 +48,8 @@ void output(LNode<ElemType>* list){
 template<typename ElemType>
 void reserveout(LNode<ElemType>* list){
     LNode<ElemType>* ptr = list->Tail;
-    for( ; ptr; ptr = ptr->prev){
+    for( ; ptr; ptr = ptr->prev)
         cout << ptr->value << endl;
-    }
 }
 
 
