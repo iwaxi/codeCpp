@@ -44,6 +44,7 @@ void output(LNode<ElemType>* list){
     for( ; p; p = p->next)
         cout << p->value << endl;
 }
+
 template<typename ElemType>
 void reserveout(LNode<ElemType>* list){
     LNode<ElemType>* ptr = list->Tail;
