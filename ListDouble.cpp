@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+// by iwaxi_dy 2022/11/4
+
 template<typename ElemType>     // basic datafield
 struct LNode
 {
