@@ -133,19 +133,22 @@ void ListDouble<ElemType>::insert(int index_to_insert, ElemType newValue){
             }
             tail->next = New;
             New->prev = tail;
-            size ++;
             New->next = nullptr;
+            tail = New;
+            size ++;
+            return;
         }
     }
     catch(int ex){
         cout << "Error, Invalid index: " << ex << endl;
+        return;
     }
 }
 
 
 template<typename ElemType>
 ListDouble<ElemType> create(){
-    ListDouble<ElemType> list1(5);
+    ListDouble<ElemType> list1(5); // length-only
     return list1;
 }
 
@@ -166,6 +169,7 @@ int main()
 
     list.insert(5, 11);
     list.output();
+    list.reserveout();
 
     list2.output();
     list3.output();
