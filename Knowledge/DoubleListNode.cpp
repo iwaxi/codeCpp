@@ -42,14 +42,14 @@ template<typename ElemType>     // output the list
 void output(LNode<ElemType>* list){
     LNode<ElemType>* p = list->next;
     for( ; p; p = p->next)
-        cout << p->value << endl;
+        cout << p->value << " ";
 }
 
 template<typename ElemType>
 void reserveout(LNode<ElemType>* list){
     LNode<ElemType>* ptr = list->Tail;
-    for( ; ptr; ptr = ptr->prev)
-        cout << ptr->value << endl;
+    for( ; ptr->prev; ptr = ptr->prev)
+        cout << ptr->value << " ";
 }
 
 
@@ -58,7 +58,9 @@ int main()
     int* a = new int[10]{1, 2, 3, 4, 5, 6};
     LNode<int>* list = create(a, 6);
     output(list);
+    cout << endl;
     reserveout(list);
     system("pause");
+    delete[] a;
     return 0;
 }
