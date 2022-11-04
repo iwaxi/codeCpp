@@ -89,7 +89,7 @@ unsigned ListNode::insertMemeber(int indexInsert, ElemType newValue){
     return Yes;
 }
 
-ElemType ListNode::searchValue(ElemType Value_to_Find){
+int ListNode::searchValue(ElemType Value_to_Find){
     ListNode* ptr = this;
     for( ; ptr != nullptr; ptr = ptr->next)
         if(ptr->value == Value_to_Find)
@@ -97,7 +97,7 @@ ElemType ListNode::searchValue(ElemType Value_to_Find){
     return No;
 }
 
-int ListNode::searchIndex(int Index_to_Find){
+ElemType ListNode::searchIndex(int Index_to_Find){
     ListNode* ptr = this;
     for( ; ptr != nullptr; ptr = ptr->next)
         if(ptr->index == Index_to_Find)
