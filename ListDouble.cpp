@@ -10,7 +10,6 @@ struct LNode
     LNode<ElemType>* next;
     LNode<ElemType>* prev;
 };
-
 template<typename ElemType>
 class ListDouble
 {
@@ -20,15 +19,22 @@ public:
     ListDouble(int);            // value Construct
     void output();              // output from head to tail
     void reserveout();          // output from tail to head
-    ~ListDouble();              // destroy the whole list
+    ~ListDouble();              // destroy the whole list 
+    //NO!!!! IF YOU CAN NOT MAKE SURE, DO NOT WRITE YOUR OWN COPY OR DESTROY FUNCTION!!!!
+
     void insert(int, ElemType); // insert a new node
     void delNode(int);          // delete a node
+    ListDouble<ElemType> copy();// create a different list-self-copy
+    ListDouble<ElemType> operator+(ListDouble<ElemType>); // append two lists
+    
+    template<typename T>
+    friend ostream& operator<<(ostream& o, ListDouble<T>);   // output
+
 
 private:
     LNode<ElemType> *head; // head
     LNode<ElemType> *tail; // tail
     int size;       // size
-
 };
 
 
@@ -101,14 +107,6 @@ void ListDouble<ElemType>::reserveout(){
 
 template<typename ElemType>
 ListDouble<ElemType>::~ListDouble(){
-    if(head){
-        LNode<ElemType> *ptr = head->next;
-        for( ; ptr; ptr = ptr->next){
-            delete ptr->prev;
-            ptr->prev = 0;
-        }    
-    }
-    size = 0;
     cout << "Delete Successfully.\n";
 }
 
@@ -178,6 +176,50 @@ void ListDouble<ElemType>::delNode(int index_to_del){
     }
 }
 
+template<typename ElemType>
+ListDouble<ElemType> ListDouble<ElemType>::copy(){
+    LNode<ElemType> *ptrList = this->head->next, *New, *ptr;
+    ListDouble<ElemType> list;
+
+    list.head = new LNode<ElemType>;
+    list.size = this->size;
+    list.head->value = this->head->value;
+    list.head->prev = list.head->next = nullptr;
+    ptr = list.head;
+
+    for( ; ptrList; ptrList = ptrList->next){
+        New = new LNode<ElemType>;
+        New->value = ptrList->value;
+        New->prev = ptr;
+        New->next = nullptr;
+
+        ptr->next = New;
+        ptr = New;
+    }
+    list.tail = ptr;
+    return list;
+}
+
+template<typename ElemType>
+ListDouble<ElemType> ListDouble<ElemType>::operator+(ListDouble<ElemType> list){
+    ListDouble<ElemType> list1 = this->copy(), list2 = list.copy();
+    list1.size += list2.size;
+    list1.head->value = list1.size;
+    list1.tail->next = list2.head->next;
+    list2.head->next->prev = list1.tail;
+    delete list2.head;
+    list1.tail = list2.tail;
+    return list1;
+}
+
+template<typename ElemType>
+ostream& operator<<(ostream& o, ListDouble<ElemType> list){
+    LNode<ElemType> *ptr = list.head->next;
+    for( ; ptr; ptr = ptr->next)
+        o << ptr->value << " ";
+    o << "size: " << list.size << endl;
+    return o;
+}
 
 // normal functions
 template<typename ElemType>
@@ -190,6 +232,7 @@ template<typename ElemType>
 void F(ListDouble<ElemType> b){
     return;
 }
+
 int main()
 {
     int *a = new int[5]{1, 2, 3, 4, 5};
@@ -210,6 +253,20 @@ int main()
     list.delNode(6);
     list.output();
     list.reserveout();
+
+    cout << "\nCopy Test: \n";
+    ListDouble<int> list4 = list.copy();
+    list4.output();
+    list4.reserveout();
+
+    cout << "\nAppend Test: \n";
+    ListDouble<int> list5 = list + list2;
+    (list + list2).output();
+    list5.output();
+    list5.reserveout();
+
+    cout << "\nOperator Test: \n";
+    cout << list;
 
     cout << "\nOther Test: \n";
     list2.output();
