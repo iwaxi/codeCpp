@@ -19,33 +19,36 @@ public:
     ListDouble(int);            // value Construct
     void output();              // output from head to tail
     void reserveout();          // output from tail to head
-    ~ListDouble();              // destroy the whole list 
+    ~ListDouble();              // useless
     //NO!!!! IF YOU CAN NOT MAKE SURE, DO NOT WRITE YOUR OWN COPY OR DESTROY FUNCTION!!!!
 
     void insert(int, ElemType); // insert a new node
     void delNode(int);          // delete a node
     ListDouble<ElemType> copy();// create a different list-self-copy
-    ListDouble<ElemType> operator+(ListDouble<ElemType>); // append two lists
-    
-    template<typename T>
-    friend ostream& operator<<(ostream& o, ListDouble<T>);   // output
+    ElemType searchByIndex(int);// search by index
+    int searchByValue(ElemType);// search by value
 
+    ListDouble<ElemType> operator+(ListDouble<ElemType>);    // append two lists
+    template<typename T>
+    friend ostream& operator<<(ostream& o, ListDouble<T>);   // operator out
+    template<typename T>
+    friend ostream& operator>>(ostream& o, ListDouble<T>);   // operator reserveout
 
 private:
     LNode<ElemType> *head; // head
     LNode<ElemType> *tail; // tail
-    int size;       // size
+    int size;              // size
 };
 
 
-template<typename ElemType>         // default Construct
-ListDouble<ElemType>::ListDouble(){
+template<typename ElemType>         
+ListDouble<ElemType>::ListDouble(){  // default Construct
     size = 0;
     head = tail = nullptr;
 }
 
 template<typename ElemType>
-ListDouble<ElemType>::ListDouble(ElemType* data, int n): size(0),head(0),tail(0){ // parameter Construct
+ListDouble<ElemType>::ListDouble(ElemType* data, int n): size(0),head(0),tail(0){  // parameter Construct
     LNode<ElemType> *ptr = nullptr, *New = nullptr;
 
     head = new LNode<ElemType>;
@@ -177,7 +180,7 @@ void ListDouble<ElemType>::delNode(int index_to_del){
 }
 
 template<typename ElemType>
-ListDouble<ElemType> ListDouble<ElemType>::copy(){
+ListDouble<ElemType> ListDouble<ElemType>::copy(){              // create a deep-copy
     LNode<ElemType> *ptrList = this->head->next, *New, *ptr;
     ListDouble<ElemType> list;
 
@@ -201,6 +204,41 @@ ListDouble<ElemType> ListDouble<ElemType>::copy(){
 }
 
 template<typename ElemType>
+ElemType ListDouble<ElemType>::searchByIndex(int index_to_find){
+    LNode<ElemType> *ptr = head->next;
+    try{
+        if(index_to_find < 0 || index_to_find >= size)
+            throw index_to_find;
+        else{
+            for(int i = 0; ptr; ptr = ptr->next, i++)
+                if(i == index_to_find){
+                    cout << "The vaule of index " << index_to_find << " is: ";
+                    return ptr->value;
+                }
+        }
+    }
+    catch(int ex){
+        cout << "Error, Invalid index: " << ex << ", return ";
+        return -114514;
+    }
+}
+
+template<typename ElemType>
+int ListDouble<ElemType>::searchByValue(ElemType value){
+    LNode<ElemType> *ptr = head->next;
+    for(int i = 0; ptr; ptr = ptr->next, i++){
+        if(ptr->value == value){
+            cout << "The index of value " << value << " is: ";
+            return i;
+        }
+    }
+    cout << "NPOS for value "<< value << ", return ";
+    return -1;
+}
+
+// operator overloading
+
+template<typename ElemType>
 ListDouble<ElemType> ListDouble<ElemType>::operator+(ListDouble<ElemType> list){
     ListDouble<ElemType> list1 = this->copy(), list2 = list.copy();
     list1.size += list2.size;
@@ -221,7 +259,17 @@ ostream& operator<<(ostream& o, ListDouble<ElemType> list){
     return o;
 }
 
+template<typename ElemType>
+ostream& operator>>(ostream& o, ListDouble<ElemType> list){
+    LNode<ElemType> *ptr = list.tail;
+    for( ; ptr->prev; ptr = ptr->prev)
+        o << ptr->value << " ";
+    o << "size: " << list.size << endl;
+    return o;
+}
+
 // normal functions
+
 template<typename ElemType>
 ListDouble<ElemType> create(){
     ListDouble<ElemType> list1(5); // length-only
@@ -267,6 +315,13 @@ int main()
 
     cout << "\nOperator Test: \n";
     cout << list;
+    cout >> list;
+
+    cout << "\nSearch Test: \n";
+    cout << list.searchByIndex(2) << endl;
+    cout << list.searchByIndex(-2) << endl;
+    cout << list.searchByValue(5) << endl;
+    cout << list.searchByValue(-1) << endl;
 
     cout << "\nOther Test: \n";
     list2.output();
