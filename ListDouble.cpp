@@ -10,6 +10,7 @@ struct LNode
     LNode<ElemType>* next;
     LNode<ElemType>* prev;
 };
+
 template<typename ElemType>
 class ListDouble
 {
@@ -20,7 +21,7 @@ public:
     void output();              // output from head to tail
     void reserveout();          // output from tail to head
     ~ListDouble();              // useless
-    //NO!!!! IF YOU CAN NOT MAKE SURE, DO NOT WRITE YOUR OWN COPY OR DESTROY FUNCTION!!!!
+    // Warning!!! IF YOU CAN NOT MAKE SURE, DO NOT WRITE YOUR OWN COPY OR DESTROY FUNCTION!!!!
 
     void insert(int, ElemType); // insert a new node
     void delNode(int);          // delete a node
@@ -39,7 +40,6 @@ private:
     LNode<ElemType> *tail; // tail
     int size;              // size
 };
-
 
 template<typename ElemType>         
 ListDouble<ElemType>::ListDouble(){  // default Construct
@@ -285,7 +285,7 @@ int main()
 {
     int *a = new int[5]{1, 2, 3, 4, 5};
     ListDouble<int> list(a, 5);
-    
+
     ListDouble<int> list2 = create<int>(), list3 = 3;   // create & copy
     F<int>(2);          // stack object
 
