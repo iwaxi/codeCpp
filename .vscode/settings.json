@@ -118,7 +118,9 @@
     "queue": "cpp",
     "stack": "cpp",
     "version": "cpp",
-    "compare": "cpp"
+    "compare": "cpp",
+    "concepts": "cpp",
+    "numbers": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
