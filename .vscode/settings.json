@@ -122,7 +122,17 @@
     "concepts": "cpp",
     "numbers": "cpp",
     "ranges": "cpp",
-    "span": "cpp"
+    "span": "cpp",
+    "barrier": "cpp",
+    "coroutine": "cpp",
+    "expected": "cpp",
+    "latch": "cpp",
+    "semaphore": "cpp",
+    "source_location": "cpp",
+    "spanstream": "cpp",
+    "stacktrace": "cpp",
+    "stop_token": "cpp",
+    "syncstream": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
