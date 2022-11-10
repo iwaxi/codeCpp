@@ -15,7 +15,7 @@ public:
     vector(): sz(0), elem(new T[16]), space(16){}
     vector(int size): sz(size), elem(new T[2 * size]), space(2 * size){}
     vector(std::initializer_list<T> list): 
-    sz{list.size()}, elem(new T[2 * sz]), space(2 * sz){
+    sz{list.size()}, elem{new T[2 * sz]{}}, space{2 * sz}{
         std::copy(list.begin(), list.end(), elem);
     }
     vector(const vector&);
