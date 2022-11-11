@@ -15,7 +15,7 @@ public:
     vector(): sz(0), elem(new T[16]), space(16){}
     vector(int size): sz(size), elem(new T[2 * size]), space(2 * size){}
     vector(std::initializer_list<T> list): 
-    sz{list.size()}, elem{new T[2 * sz]{}}, space{2 * sz}{
+    sz{(int)list.size()}, elem{new T[2 * sz]{}}, space{2 * sz}{
         std::copy(list.begin(), list.end(), elem);
     }
     vector(const vector&);
@@ -86,7 +86,7 @@ T vector<T>::get(int n){
 }
 template<typename T>
 vector<T>& vector<T>::operator=(const vector<T>& a){
-    vector p = new T[a.space];
+    T p = new T[a.space];
     sz = a.sz;  space = a.space;
     for(int i = 0; i < sz; i++)
         p[i] = a.elem[i];
