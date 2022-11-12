@@ -1,3 +1,43 @@
+
+
+
+
+
+
+template<typename T>
+void SelectSort(T* data, int len){              // Select Sort
+    for(int i = 0; i < len; i++){
+        T base = data[i]; 
+        int index = 0;
+        for(int j = i; j < len; j++){
+            if(base <= data[j]){
+                base = data[j];                 // update maximum
+                index = j;
+            }
+        }
+        T temp = data[i];                       // swap
+        data[i] = data[index];
+        data[index] = temp;
+    }
+}
+
+
+
+template<typename T>
+void BubbleSort(T* data, int len){                // Bubble Sort
+    for(int i = 0; i < len; i++){
+        for(int j = 0; j + 1 < len - i; j++){
+            if(data[j] <= data[j + 1]){
+                T temp = data[j];                 // swap for this maximum
+                data[j] = data[j + 1];
+                data[j + 1] = temp;               // each last is largest
+            }
+        }
+    }
+}
+
+
+
 /*#include<iostream>
 using namespace std;
 
@@ -77,7 +117,6 @@ using namespace std;
 int n;
 int main()
 {
-	int a = time(0);
     scanf("%d", &n);
 	for(int i = 0; i < (1 << n); i++)
     {
@@ -87,8 +126,6 @@ int main()
         }
 		printf("\n");
     }
-    int b = time(0);
-    cout << " time is " << b - a << endl;
     system("pause");
 	return 0;
 }
