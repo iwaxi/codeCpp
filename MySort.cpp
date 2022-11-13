@@ -122,9 +122,12 @@ void SelectSort(T* data, int len){
 
 template<typename T>
 void BubbleSort(T* data, int len){
-    for(int i = 0; i < len; i++){
+    bool isSort = true;
+    for(int i = 0; i < len && isSort; i++){
+        isSort = false;
         for(int j = 0; j + 1 < len - i; j++){
             if(data[j] <= data[j + 1]){
+                isSort = true;
                 T temp = data[j];
                 data[j] = data[j + 1];
                 data[j + 1] = temp;
