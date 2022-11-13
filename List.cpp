@@ -184,7 +184,7 @@ int main()
         case 4:{
             ElemType Value_to_Find = 0;
             cout << "Input the value to search: ";  cin >> Value_to_Find;
-            if(numberList->searchValue(Value_to_Find) != No)
+            if(numberList->searchValue(Value_to_Find) != (int)No)
                 cout << "The position of value " << Value_to_Find << " is " << numberList->searchValue(Value_to_Find) << endl;
             else
                 cout << " Nops = No position to find.\n";
@@ -194,7 +194,7 @@ int main()
             int Index_to_Find = 0;
             cout << "Input the index to search: "; 
             cin >> Index_to_Find;
-            if(numberList->searchIndex(Index_to_Find) != No)
+            if(numberList->searchIndex(Index_to_Find) != (int)No)
                 cout << "The value of index " << Index_to_Find << " is " << numberList->searchIndex(Index_to_Find) << endl;
             else
                 cout << " Error: Invalid index.\n";
