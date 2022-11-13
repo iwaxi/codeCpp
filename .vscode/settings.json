@@ -132,7 +132,8 @@
     "spanstream": "cpp",
     "stacktrace": "cpp",
     "stop_token": "cpp",
-    "syncstream": "cpp"
+    "syncstream": "cpp",
+    "stdio.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
