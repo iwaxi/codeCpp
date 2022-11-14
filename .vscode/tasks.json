@@ -3,9 +3,10 @@
     "tasks": [
         {
             "label": "complie",
-            "type": "shell",
+            "type": "process",
             "command": "g++",
             "args": [
+                //"-std=c++20",
                 "-g",
                 "${fileBasename}",
                 "-o",

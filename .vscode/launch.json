@@ -29,8 +29,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/VCcode/SpecialWorks/ListNode",
-      "program": "d:/VCcode/SpecialWorks/ListNode/build/Debug/outDebug",
+      "cwd": "d:/VCcode",
+      "program": "d:/VCcode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
