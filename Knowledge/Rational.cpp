@@ -23,10 +23,12 @@ public:
     double doubleValue() const;
     int intValue() const;
     string toString() const; 
+    Rational operator++();
+    Rational operator++(int);
 private:
     int numerator;
     int denominator;
-    static int Common(int n, int d);
+    static int gcd(int n, int d);
 };
 
 Rational::Rational(){
@@ -34,15 +36,15 @@ Rational::Rational(){
     denominator = 1;
 }
 
-int Rational::Common(int n, int d){
+int Rational::gcd(int n, int d){
     if(d)
-        return Common(d, n % d);
+        return gcd(d, n % d);
     else
         return n;
 }
 Rational::Rational(int newNumerator = 0, int newDenominator = 1){
-    numerator = newNumerator / Common(myabs(newNumerator), myabs(newDenominator));
-    denominator = newDenominator / Common(myabs(newNumerator), myabs(newDenominator));
+    numerator = newNumerator / gcd(myabs(newNumerator), myabs(newDenominator));
+    denominator = newDenominator / gcd(myabs(newNumerator), myabs(newDenominator));
 }
 Rational Rational::add(const Rational& anotherRational) const{
     int n = numerator * anotherRational.denominator + anotherRational.numerator * denominator;
@@ -64,13 +66,29 @@ ostream& operator<<(ostream& out, const Rational& thisRational){
     thisRational.denominator > 1 ? out << thisRational.numerator << " / " << thisRational.denominator : out << thisRational.numerator;
     return out;
 }
+
+Rational Rational::operator++(int){     // r++
+    Rational thatRational(numerator, denominator);
+    Rational thisRational(numerator + denominator, denominator);
+    *this = thisRational;
+    return thatRational;
+}
+Rational Rational::operator++(){        // ++r
+    Rational thisRational(numerator + denominator, denominator);
+    *this = thisRational;
+    return *this;
+}
 typedef Rational Integer;
 
 #include<iostream>
 int main()
 {
-    Integer r1(1), r2(1);
-    cout << r1 << " - " << r2 << " = " << r1 + r2 << endl;
+    Rational r1(1, 2), r2(1, 3);
+    cout << r1 << " + " << r2 << " = " << r1 + r2 << endl;
+    cout << r1++ + r2 << endl;
+    cout << r1 << endl;
+    cout << (++r2) + r1 << endl;
+    cout << r2 << endl;
     system("pause");
     return 0;
 }
