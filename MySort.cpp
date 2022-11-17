@@ -136,6 +136,36 @@ void BubbleSort(T* data, int len){
     }
 }
 
+template<typename T>
+int BinarySearch(T find, T* array, int len){
+    int left = 0, right = len - 1;
+    while(left <= right){
+        int mid = (left + right) / 2;
+        if(array[mid] == find)
+            return mid;
+        else if(array[mid] < find)
+            left = mid + 1;
+        else
+            right = mid - 1; 
+    }
+    return -1;
+}
+
+template<typename T>
+void InsertSort(T* array, int len){
+    for(int i = 1; i < len; i++){
+        T temp = array[i];
+        int j = i - 1;
+        for(; j >= 0; j--){
+            if(array[j] > temp)
+                array[j + 1] = array[j];
+            else break;
+        }
+        array[j + 1] = temp;
+    }
+}
+
+
 int main()
 {
     srand(time(0));
@@ -166,7 +196,16 @@ int main()
 
     for(auto &p: b)
         cout << p << ' ';
+    cout << endl;
 
+    int c[10] = {10, 9, 7, 5, -4, 5, 1, 3, 0, 14}; 
+    /*for(int i = 0; i < 10; i++){
+        c[i] = rand() % 100 - 50;
+    }*/
+    InsertSort(c, sizeof(c) / sizeof(*c));
+    for(auto &p: c)
+        cout << p << ' ';
+    cout << "\nposition: " << BinarySearch(14, c, 10) << " " << BinarySearch(3, c, 10) << endl;;
     system("pause");
     return 0;
 }
