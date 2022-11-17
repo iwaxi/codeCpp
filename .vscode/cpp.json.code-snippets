@@ -1,0 +1,74 @@
+{
+	// Place your VCcode workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"LNode":{
+		"scope": "cpp",
+		"prefix": "struct LNode",
+		"body": [
+			"LNode",
+			"{",
+			"    int elem;",
+			"    LNode* prev;",
+			"    LNode* next;",
+			"};"
+		],
+		"description": "LNode"
+	},
+	"TreeNode":{
+		"scope": "cpp",
+		"prefix": "TreeNode",
+		"body": [
+			"TreeNode",
+			"{",
+			"    int elem;",
+			"    TreeNode* left",
+			"    TreeNode* right",
+			"};"
+		],
+		"description": "TreeNode"
+	},
+	/*"MergeSort":{
+		"scope": "cpp",
+		"prefix": "MergeSort",
+		"body": ["template<typename T>",
+		"void MergeSort(T* array, int length){",                           // Merge Sort
+		"   T* a = array;",                                               // def two pointers
+		"   T* b = new T[length]{};",                                   
+		"   for(int seg = 1; seg < length; seg *= 2){",                   // length of domain
+		"       for(int low = 0; low < length; low += 2 * seg){",         // sort start
+		"           int begin = low, mid = min(low + seg, length),",      // seperate domain
+		"           end = min(low + 2 * seg, length);",
+		"           int k = low;",
+		"           int start1 = begin, end1 = mid;",                     // left pointer
+		"           int start2 = mid, end2 = end;",                       // right pointer
+		"           while(start1 < end1 && start2 < end2)",
+		"               b[k++] = a[start1] < a[start2] ? ",
+		"               a[start1++] : a[start2++];",
+		"           while(start1 < end1)",
+		"               b[k++] = a[start1++];",
+		"           while(start2 < end2)",
+		"               b[k++] = a[start2++];",
+		"       }",
+		"       T* temp = a;",                                            // swap a with b
+		"       a = b;",
+		"       b = temp;",
+		"    }",
+		"}"
+	]
+	}*/
+
+}
