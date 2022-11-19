@@ -1,4 +1,5 @@
 #include<iostream>
+#include"myQueue.h"
 using namespace std;
 
 template<typename T>
@@ -6,10 +7,7 @@ T myMax(T a, T b){
     return (a > b) ? a : b;
 }
 
-int deepTimes = 0;
-int preTime = 0;
-int inTime = 0;
-int postTime = 0;
+int Times = 0;
 
 struct TreeNode
 {
@@ -32,15 +30,12 @@ TreeNode* CreateNode(){
     }
     return node;
 }
-bool isComplete(TreeNode* tr){
-    if(tr){
-        if((tr->left && !tr->right) || (!tr->left && tr->right))
-            return false;
-        else
-            return true && isComplete(tr->left) && isComplete(tr->right);
-    }
-    else return true;
+
+int nodeNumber(TreeNode* tr){
+    if(tr)  return 1 + nodeNumber(tr->left) + nodeNumber(tr->right);
+    else return 0;
 }
+
 class BinaryTree
 { 
 public:
@@ -51,10 +46,10 @@ public:
     void CreateTree(){
         root = CreateNode();
     }
-    int Deep(TreeNode* tr){
-        deepTimes ++;
+    int Depth(TreeNode* tr){
+        Times ++;
         if(tr){
-            return myMax(1 + Deep(tr->left), 1 + Deep(tr->right));
+            return myMax(1 + Depth(tr->left), 1 + Depth(tr->right));
         }
         else
             return 0;
@@ -68,12 +63,15 @@ public:
         }
         else return 0;
     }
-    void checkComplete(TreeNode* tr){
-        if(isComplete(tr)) cout << "Tree is Complete\n"; 
-        else cout << "Tree is Not Complete\n";
+    bool isFull(TreeNode* tr){
+        return ((1 << Depth(tr)) - 1) == nodeNumber(tr);
     }
+    void checkFull(TreeNode* tr){
+        if(isFull(tr)) cout << "The Tree is a Full Binary Tree.\n"; 
+        else cout << "The Tree is Not a Full Binary Tree.\n";
+    }
+    
     void preOrderTraversal(TreeNode* tr){
-        preTime ++;
         if(tr){
             if(tr == root) cout << "\npre-order Traversal: " << endl;
             cout << tr->value << " ";
@@ -82,8 +80,8 @@ public:
             if(!tr->left && !tr->right) cout << endl;
         }
     }
+
     void inOrderTraversal(TreeNode* tr){
-        inTime ++;
         if(tr){
             if(tr == root) cout << "\nin-order Traversal: " << endl;
             inOrderTraversal(tr->left);
@@ -92,14 +90,45 @@ public:
             if(!tr->left && !tr->right) cout << endl;
         }
     }
+
     void postOrderTraversal(TreeNode* tr){
-        postTime ++;
         if(tr){
             if(tr == root) cout << "\npost-order Traversal: " << endl;
             postOrderTraversal(tr->left);
             postOrderTraversal(tr->right);
             cout << tr->value << " ";
             if((!tr->left && !tr->right) || tr == root) cout << endl;
+        }
+    }
+    
+    void levelTraversal(TreeNode* tr){
+        // 1. Queue version
+        myQueue<TreeNode*> queue;
+        TreeNode* cur = tr;
+        queue.push_back(cur);
+        while(!queue.isEmpty()){
+            cur = queue.frontElem();  // get front
+            queue.pop();              // pop front
+            if(cur == tr) cout << "\nlevel Traversal: " << endl;
+            cout << cur->value << " ";
+            if(cur->left) queue.push_back(cur->left);
+            if(cur->right) queue.push_back(cur->right);
+        }
+        cout << endl << endl;
+
+        // 2. Array version
+        int len = (1 << this->Depth(tr)) - 1;
+        TreeNode** level = new TreeNode* [len]{tr}; // level[0] = tr;
+        for(int i = 0; 2 * i + 2 < len; i++){       // boundary !!!
+            if(level[i]){
+                level[2 * i + 1] = level[i]->left;
+                level[2 * i + 2] = level[i]->right;
+            }
+        }
+        cout << "\nlevel traversal(another): " << endl;
+        for(int i = 0, j = 1; i < len; i++){
+            if(level[i])   cout << level[i]->value << " ";
+            if(i == (1 << j) - 2) {cout << endl;  j++;} // depth
         }
     }
 };
@@ -109,22 +138,22 @@ int main()
     BinaryTree tree;
     tree.CreateTree();
     TreeNode* ptr = tree.root;
-
-    cout << "Depth: " << tree.Deep(tree.root) << endl; 
-    cout << "Travel deepTime: " << deepTimes << endl;
+    cout << "\nFor the Tree input: \n\n";
+    cout << "Depth: " << tree.Depth(tree.root) << endl; 
     cout << "Degree: " << tree.Degree(ptr) << endl;
+    cout << "Node numbers: " << nodeNumber(ptr) << endl;
+    cout << "Travel Times: " << Times << endl;
 
-    tree.checkComplete(ptr);
-    tree.checkComplete(ptr->right);
+    tree.checkFull(ptr);
+    tree.checkFull(ptr->right);
     
     tree.preOrderTraversal(ptr);
-    cout << "pre-Order times: " << preTime << endl;
+    //cout << "pre-Order times: " << preTime << endl;
     tree.inOrderTraversal(ptr);
-    cout << "in-Order times: " << inTime << endl;
+    //cout << "in-Order times: " << inTime << endl;
     tree.postOrderTraversal(ptr);
-    cout << "post-Order times: " << postTime << endl;
-
+    //cout << "post-Order times: " << postTime << endl;
+    tree.levelTraversal(ptr);
     system("pause");
     return 0;
 }    
-//cout << ptr->value << " " << ptr->left->value << " " << ptr->left->left->value << " " << endl;
