@@ -7,35 +7,35 @@ using namespace std;
 // 2022/11/10
 
 template<typename T>
-void QuickSort(T* data, int begin, int end){    // Quick Sort
-    if(begin >= end)
-        return;
-    else{
-        int random = 0;                         // random base(or key) is BAD!
-        T base = data[begin + random];
-        int i = begin, j = end;
-        while(true){
-            while(data[i] <= base){             // left -> larger
-                i ++;
-                if(i >= end)
-                    break;
-            }
-            while(data[j] >= base){             // right -> lesser
-                j --;
-                if(j <= begin)
-                    break;
-            }
-            if(i >= j)                          // end compare
+void QuickSort(T* data, int low, int high){     // Quick Sort
+    if(low >= high)                             
+        return;                                 // end Recursion
+
+    int index = low;
+    T key = data[index];                        // compare base
+    int left = low, right = high;               // high !  when use, let high = len - 1 !!!
+    while(true){
+        for( ; left < high; left++){            // left  -> for larger
+            if(data[left] > key)
                 break;
-            T temp = data[i];                   // swap
-            data[i] = data[j];
-            data[j] = temp;
         }
-        data[begin + random] = data[j];         // insert key into middle position
-        data[j] = base;
-        QuickSort(data, begin, j - 1);          // take apart
-        QuickSort(data, j + 1, end);
+        for( ; right > low; right--){           // right -> for lesser
+            if(data[right] < key)               // care for array beyond-boundary !!!
+                break;
+        }
+        if(left >= right)                       // end loop
+            break;
+        
+        T temp = data[left];                    // swap
+        data[left] = data[right];
+        data[right] = temp;
     }
+
+    data[index] = data[right];                  // insert key(swap)
+    data[right] = key;
+
+    QuickSort(data, low, right - 1);            // Recursion
+    QuickSort(data, right + 1, high);
 }
 
 template<typename T>
@@ -69,40 +69,6 @@ void MergeSort(T* array, int length){                           // Merge Sort
     delete[] b;
 }
 
-
-template<typename T>
-void QuickSort1(T* data, int low, int high){     // Quick Sort
-    if(low >= high)                             
-        return;                                 // end Recursion
-
-    int index = low;
-    T key = data[index];                        // compare base
-    int left = low, right = high;
-    while(true){
-        for( ; left < high; left++){            // left  -> for larger
-            if(data[left] > key)
-                break;
-        }
-        for( ; right > low; right--){           // right -> for lesser
-            if(data[right] < key)
-                break;
-        }
-        if(left >= right)                       // end loop
-            break;
-        
-        T temp = data[left];                    // swap
-        data[left] = data[right];
-        data[right] = temp;
-    }
-
-    data[index] = data[right];                  // insert key
-    data[right] = key;
-
-    QuickSort1(data, low, right - 1);            // Recursion
-    QuickSort1(data, right + 1, high);
-}
-
-
 template<typename T>
 void SelectSort(T* data, int len){
     for(int i = 0; i < len; i++){
@@ -118,7 +84,6 @@ void SelectSort(T* data, int len){
         data[index] = trans;
     }
 }
-
 
 template<typename T>
 void BubbleSort(T* data, int len){
@@ -153,18 +118,26 @@ int BinarySearch(T find, T* array, int len){
 
 template<typename T>
 void InsertSort(T* array, int len){
-    for(int i = 1; i < len; i++){
+    for(int i = 1; i < len; i ++){
         T temp = array[i];
         int j = i - 1;
-        for(; j >= 0; j--){
-            if(array[j] > temp)
-                array[j + 1] = array[j];
-            else break;
-        }
+        for(; j >= 0 && array[j] > temp; j --)
+            array[j + 1] = array[j];
         array[j + 1] = temp;
     }
+}   
+        
+template<typename T>
+void ShellSort(T* data, int len){
+    for(int gap = len / 2; gap > 0; gap >>= 1){
+        for(int i = gap; i < len; i ++){    // Insert Sort
+            T temp = data[i];   int j = i - gap;
+            for( ; j >= 0 && data[j] > temp; j -= gap)
+                data[j + gap] = data[j];
+            data[j + gap] = temp;
+        }
+    }
 }
-
 
 int main()
 {
@@ -179,7 +152,7 @@ int main()
     for(int i = 0; i < 20; i++){
         d[i] = rand() % 100 - 50;
     }    
-    QuickSort1(d, 0, sizeof(d) / sizeof(*d) - 1);
+    QuickSort(d, 0, sizeof(d) / sizeof(*d) - 1);
 
     int b[20] = {};
     for(int i = 0; i < 20; i++){
@@ -209,3 +182,40 @@ int main()
     system("pause");
     return 0;
 }
+
+/*template<typename T>
+void QuickSort(T* data, int begin, int end){    // Quick Sort
+    if(begin >= end)
+        return;
+    else{
+        int random = 0;                         // random base(or key) is BAD!
+        T base = data[begin + random];
+        int i = begin, j = end - 1;
+        while(true){
+            while(data[i] <= base){             // left -> larger
+                i ++;
+                if(i >= end)
+                    break;
+            }
+            while(data[j] >= base){             // right -> lesser
+                j --;
+                if(j <= begin)
+                    break;
+            }
+            if(i >= j)                          // end compare
+                break;
+            T temp = data[i];                   // swap
+            data[i] = data[j];
+            data[j] = temp;
+        }
+        data[begin + random] = data[j];         // insert key into middle position
+        data[j] = base;
+        QuickSort(data, begin, j - 1);          // take apart
+        QuickSort(data, j + 1, end);
+    }
+}*/
+/*for(; j >= 0; j--){
+            if(array[j] > temp)
+                array[j + 1] = array[j];
+            else break;
+        }*/
