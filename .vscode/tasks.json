@@ -6,7 +6,6 @@
             "type": "process",
             "command": "g++",
             "args": [
-                //"-std=c++20",
                 "-g",
                 "${fileBasename}",
                 "-o",
@@ -18,4 +17,4 @@
             "problemMatcher": "$msCompile"
         }
     ]
-}
+} //"-std=c++20",
