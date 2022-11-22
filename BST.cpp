@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+
 struct TreeNode
 {
     int elem;
@@ -10,9 +11,13 @@ struct TreeNode
 
 class BinarySearchTree
 {
-public:
+private:
     TreeNode* root;
+public:
     BinarySearchTree(){ root = nullptr; }
+    TreeNode* getRoot(){
+        return root;
+    }
     void insert(int a){
         if(!root){
             root = new TreeNode;
@@ -78,6 +83,7 @@ int main()
         bst.insert(a[i]);
     bst.findMax();
     bst.findMin();
-    bst.in_order(bst.root);
+    TreeNode* tr = bst.getRoot();
+    bst.in_order(tr);
     return 0;
 }
