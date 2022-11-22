@@ -25,6 +25,15 @@ public:
     string toString() const; 
     Rational operator++();
     Rational operator++(int);
+    operator string(){
+        return toString();
+    }
+    operator double(){
+        return doubleValue();
+    }
+    operator int(){
+        return intValue();
+    }
 private:
     int numerator;
     int denominator;
