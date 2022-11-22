@@ -33,7 +33,7 @@ public:
                         break;
                     }
                 }
-                //else if(a == tr->elem) return;
+                // else if(a == tr->elem) return;
                 else{
                     if(tr->left)
                         tr = tr->left;
