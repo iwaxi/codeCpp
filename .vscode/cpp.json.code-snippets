@@ -35,8 +35,9 @@
 			"TreeNode",
 			"{",
 			"    int elem;",
-			"    TreeNode* left",
-			"    TreeNode* right",
+			"    TreeNode* left;",
+			"    TreeNode* right;",
+			"    TreeNode* parent;",
 			"};"
 		],
 		"description": "TreeNode"
