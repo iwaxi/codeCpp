@@ -19,7 +19,7 @@
 		"scope": "cpp",
 		"prefix": "struct LNode",
 		"body": [
-			"LNode",
+			"struct LNode",
 			"{",
 			"    int elem;",
 			"    LNode* prev;",
@@ -32,7 +32,7 @@
 		"scope": "cpp",
 		"prefix": "TreeNode",
 		"body": [
-			"TreeNode",
+			"struct TreeNode",
 			"{",
 			"    int elem;",
 			"    TreeNode* left;",
