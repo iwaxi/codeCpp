@@ -7,37 +7,43 @@ using namespace std;
 // 2022/11/10
 
 template<typename T>
-void QuickSort(T* data, int low, int high){     // Quick Sort
-    if(low >= high)                             
-        return;                                 // end Recursion
-
-    int index = low;
-    T key = data[index];                        // compare base
-    int left = low, right = high;               // high !  when use, let high = len - 1 !!!
-    while(true){
-        for( ; left < high; left++){            // left  -> for larger
-            if(data[left] > key)
-                break;
-        }
-        for( ; right > low; right--){           // right -> for lesser
-            if(data[right] < key)               // care for array beyond-boundary !!!
-                break;
-        }
-        if(left >= right)                       // end loop
-            break;
-        
-        T temp = data[left];                    // swap
-        data[left] = data[right];
-        data[right] = temp;
-    }
-
-    data[index] = data[right];                  // insert key(swap)
-    data[right] = key;
-
-    QuickSort(data, low, right - 1);            // Recursion
-    QuickSort(data, right + 1, high);
+void Swap(T* a, T* b){
+    T temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
+template<typename T>
+void QuickSort(T* elem, int low, int high){            // Quick Sort(random)
+    if(low >= high)                                    // high = length - 1 !!
+        return;     // end Recursive
+    int index = low + rand() % (high - low + 1);       // random index
+    T key = elem[index];
+    int left = low, right = high;
+    while(true){
+        for( ; right > low && right > index; right--){ // right for lesser
+            if(elem[right] < key){
+                Swap(elem + right, elem + index);
+                index = right;                         // swap instead of insert
+                break;
+            }
+        }
+        for( ; left < high && left < index; left++){   // left for larger
+            if(elem[left] > key){
+                Swap(elem + left, elem + index);
+                index = left;
+                break;
+            }
+        }
+        if(right == left)  // end loop
+            break;
+    }
+    if(elem[right] > key)      // in case of no swap on side-point
+        Swap(elem + index, elem + right);
+     
+    QuickSort(elem, low, right - 1);
+    QuickSort(elem, right + 1, high);
+}
 template<typename T>
 void MergeSort(T* array, int length){                           // Merge Sort
     T* a = array;                                               // def two pointers
@@ -219,3 +225,36 @@ void QuickSort(T* data, int begin, int end){    // Quick Sort
                 array[j + 1] = array[j];
             else break;
         }*/
+
+
+        /*template<typename T>
+void QuickSort(T* data, int low, int high){     // Quick Sort
+    if(low >= high)                             
+        return;                                 // end Recursion
+
+    int index = low;
+    T key = data[index];                        // compare base
+    int left = low, right = high;               // high !  when use, let high = len - 1 !!!
+    while(true){
+        for( ; left < high; left++){            // left  -> for larger
+            if(data[left] > key)
+                break;
+        }
+        for( ; right > low; right--){           // right -> for lesser
+            if(data[right] < key)               // care for array beyond-boundary !!!
+                break;
+        }
+        if(left >= right)                       // end loop
+            break;
+        
+        T temp = data[left];                    // swap
+        data[left] = data[right];
+        data[right] = temp;
+    }
+
+    data[index] = data[right];                  // insert key(swap)
+    data[right] = key;
+
+    QuickSort(data, low, right - 1);            // Recursion
+    QuickSort(data, right + 1, high);
+}*/
