@@ -6,6 +6,7 @@ using namespace std;
 // Algorithm of Sort by iwaxi_dy 
 // 2022/11/10
 
+// Swap two elements
 template<typename T>
 void Swap(T* a, T* b){
     T temp = *a;
@@ -13,6 +14,7 @@ void Swap(T* a, T* b){
     *b = temp;
 }
 
+// Quick Sort
 template<typename T>
 void QuickSort(T* elem, int low, int high){            // Quick Sort(random)
     if(low >= high)                                    // high = length - 1 !!
@@ -44,6 +46,8 @@ void QuickSort(T* elem, int low, int high){            // Quick Sort(random)
     QuickSort(elem, low, right - 1);
     QuickSort(elem, right + 1, high);
 }
+
+// Merge Sort
 template<typename T>
 void MergeSort(T* array, int length){                           // Merge Sort
     T* a = array;                                               // def two pointers
@@ -75,6 +79,7 @@ void MergeSort(T* array, int length){                           // Merge Sort
     delete[] b;
 }
 
+// Select Sort
 template<typename T>
 void SelectSort(T* data, int len){
     for(int i = 0; i < len; i++){
@@ -91,6 +96,7 @@ void SelectSort(T* data, int len){
     }
 }
 
+// Bubble Sort
 template<typename T>
 void BubbleSort(T* data, int len){
     bool isSort = true;
@@ -107,6 +113,7 @@ void BubbleSort(T* data, int len){
     }
 }
 
+// Binary Search
 template<typename T>
 int BinarySearch(T find, T* array, int len){
     int left = 0, right = len - 1;
@@ -122,6 +129,7 @@ int BinarySearch(T find, T* array, int len){
     return -1;
 }
 
+// Insertion Sort
 template<typename T>
 void InsertSort(T* array, int len){
     for(int i = 1; i < len; i ++){
@@ -132,7 +140,8 @@ void InsertSort(T* array, int len){
         array[j + 1] = temp;
     }
 }   
-        
+
+// Shell Sort
 template<typename T>
 void ShellSort(T* data, int len){
     for(int gap = len / 2; gap > 0; gap >>= 1){
@@ -142,6 +151,33 @@ void ShellSort(T* data, int len){
                 data[j + gap] = data[j];
             data[j + gap] = temp;
         }
+    }
+}
+
+// bulid max_heap
+template<typename T>
+void max_heap(T* data, T start, T end){           // build max_heap from start to end
+    for(int i = start, j = 2 * i + 1; j < end; ){
+        if(j + 1 < end && data[j + 1] > data[j])  // i refers to parent, j refers to children
+            j ++;                                 // compare 2 children, get the max
+        if(data[i] > data[j])                     
+            return;                               // if built, return
+        else{
+            Swap(&data[i], &data[j]);             // else, swap
+            i = j;                              
+            j = 2 * i + 1;                        // update i & j
+        }
+    }
+}
+
+// Heap Sort
+template<typename T>
+void HeapSort(T* data, int len){
+    for(int i = len / 2 - 1; i >= 0; i--)
+        max_heap(data, i, len);                   // build max_heap from bottom to top
+    for(int i = len - 1; i > 0; i--){
+        Swap(&data[i], &data[0]);                 // swap last[i] with first[0]
+        max_heap(data, 0, i);                     // rebuild max_heap, be care of bottom[i]!!!
     }
 }
 
