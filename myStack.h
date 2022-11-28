@@ -33,7 +33,6 @@ public:
         return sz == 0;
     }
     ~myStack(){
-        delete[] elem;
         space = sz = 0;
     }
 };
