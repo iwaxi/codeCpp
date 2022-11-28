@@ -23,14 +23,14 @@ void QuickSort(T* elem, int low, int high){            // Quick Sort(random)
     T key = elem[index];
     int left = low, right = high;
     while(true){
-        for( ; right > low && right > index; right--){ // right for lesser
+        for( ; right > index; right--){ // right for lesser
             if(elem[right] < key){
                 Swap(elem + right, elem + index);
                 index = right;                         // swap instead of insert
                 break;
             }
         }
-        for( ; left < high && left < index; left++){   // left for larger
+        for( ; left < index; left++){   // left for larger
             if(elem[left] > key){
                 Swap(elem + left, elem + index);
                 index = left;
@@ -39,13 +39,13 @@ void QuickSort(T* elem, int low, int high){            // Quick Sort(random)
         }
         if(right == left)  // end loop
             break;
-    }
-    if(elem[right] > key)      // in case of no swap on side-point
-        Swap(elem + index, elem + right);
-     
+    } 
+    
     QuickSort(elem, low, right - 1);
     QuickSort(elem, right + 1, high);
 }
+/*if(elem[right] > key)      // in case of no swap on side-point [useless]
+        Swap(elem + index, elem + right);*/
 
 // Merge Sort
 template<typename T>
@@ -156,7 +156,7 @@ void ShellSort(T* data, int len){
 
 // bulid max_heap
 template<typename T>
-void max_heap(T* data, T start, T end){           // build max_heap from start to end
+void max_heap(T* data, int start, int end){           // build max_heap from start to end
     for(int i = start, j = 2 * i + 1; j < end; ){
         if(j + 1 < end && data[j + 1] > data[j])  // i refers to parent, j refers to children
             j ++;                                 // compare 2 children, get the max
@@ -224,73 +224,3 @@ int main()
     system("pause");
     return 0;
 }
-
-/*template<typename T>
-void QuickSort(T* data, int begin, int end){    // Quick Sort
-    if(begin >= end)
-        return;
-    else{
-        int random = 0;                         // random base(or key) is BAD!
-        T base = data[begin + random];
-        int i = begin, j = end - 1;
-        while(true){
-            while(data[i] <= base){             // left -> larger
-                i ++;
-                if(i >= end)
-                    break;
-            }
-            while(data[j] >= base){             // right -> lesser
-                j --;
-                if(j <= begin)
-                    break;
-            }
-            if(i >= j)                          // end compare
-                break;
-            T temp = data[i];                   // swap
-            data[i] = data[j];
-            data[j] = temp;
-        }
-        data[begin + random] = data[j];         // insert key into middle position
-        data[j] = base;
-        QuickSort(data, begin, j - 1);          // take apart
-        QuickSort(data, j + 1, end);
-    }
-}*/
-/*for(; j >= 0; j--){
-            if(array[j] > temp)
-                array[j + 1] = array[j];
-            else break;
-        }*/
-
-
-        /*template<typename T>
-void QuickSort(T* data, int low, int high){     // Quick Sort
-    if(low >= high)                             
-        return;                                 // end Recursion
-
-    int index = low;
-    T key = data[index];                        // compare base
-    int left = low, right = high;               // high !  when use, let high = len - 1 !!!
-    while(true){
-        for( ; left < high; left++){            // left  -> for larger
-            if(data[left] > key)
-                break;
-        }
-        for( ; right > low; right--){           // right -> for lesser
-            if(data[right] < key)               // care for array beyond-boundary !!!
-                break;
-        }
-        if(left >= right)                       // end loop
-            break;
-        
-        T temp = data[left];                    // swap
-        data[left] = data[right];
-        data[right] = temp;
-    }
-
-    data[index] = data[right];                  // insert key(swap)
-    data[right] = key;
-
-    QuickSort(data, low, right - 1);            // Recursion
-    QuickSort(data, right + 1, high);
-}*/
