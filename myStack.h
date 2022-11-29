@@ -10,7 +10,9 @@ private:
     void checkSize(){
         if(sz + 1 >= space){
             space *= 2;
-            ElemType* newElem = new ElemType[space];
+            ElemType* newElem = new ElemType[space]{};
+            for(int i = 0; i < sz; i++)
+                newElem[i] = elem[i];
             delete[] elem;
             elem = newElem;
         }
