@@ -1,11 +1,16 @@
 #ifndef __myQueue
 #define __myQueue
+
+#ifndef __LNode
+#define __LNode
 template<typename ElemType>
 struct LNode
 {
     ElemType elem;
-    LNode* next;
+    LNode<ElemType>* next;
+    LNode<ElemType>* prev;
 };
+#endif
 
 template<typename ElemType>
 class myQueue
