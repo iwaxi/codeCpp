@@ -43,5 +43,12 @@ public:
         }
     }
     bool isEmpty(){ return front->next == rear;}
+    ~myQueue(){
+        while(front != rear){
+            LNode<ElemType>* del = front;
+            front = front->next;
+            delete del;
+        }
+    }
 };
 #endif
