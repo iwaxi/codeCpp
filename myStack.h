@@ -35,6 +35,7 @@ public:
         return sz == 0;
     }
     ~myStack(){
+        if(sz) delete[] elemStk;
         space = sz = 0;
     }
 };
